@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verifier</title>
+</head>
+<body>
+    <h2>Email Verifier</h2>
+    <input type="email" id="emailInput" placeholder="Enter Email">
+    <button onclick="verifyEmail()">Check Email</button>
+    <p id="result"></p>
+
+    <script>
+        function verifyEmail() {
+            let email = document.getElementById("emailInput").value;
+            if (!email) {
+                alert("Please enter an email!");
+                return;
+            }
+
+            let apiUrl = `https://your-worker-url.workers.dev/?email=${encodeURIComponent(email)}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("result").innerText = `Result: ${data.status}`;
+                })
+                .catch(error => {
+                    document.getElementById("result").innerText = "Error checking email.";
+                });
+        }
+    </script>
+</body>
+</html>
